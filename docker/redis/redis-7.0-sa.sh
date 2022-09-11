@@ -1,7 +1,7 @@
 name="redis"
 version="7.0"
 image=${name}:${version}
-finalName=${name}-${version}-standalone
+finalName=${name}-${version}-sa
 rootDir=data
 
 
@@ -12,6 +12,8 @@ firewall-cmd --reload
 
 mkdir -p /${rootDir}/${finalName}/conf
 touch /${rootDir}/${finalName}/conf/redis.conf
+cat ./redis-7.0-sa.conf > /${rootDir}/${finalName}/conf/redis.conf/redis.conf
+
 
 docker pull ${image}
 
@@ -20,5 +22,3 @@ docker run -p 6379:6379 --name ${finalName} \
   -v /${rootDir}/${finalName}/conf/redis.conf:/etc/redis/redis.conf \
   -d ${image} redis-server /etc/redis/redis.conf
 
-
-cat ./redis-7.0-standalone.conf > /${rootDir}/${finalName}/conf/redis.conf/redis.conf
